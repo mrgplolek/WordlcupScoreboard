@@ -1,37 +1,31 @@
-package port.in;
+package service;
 
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import port.out.StartMatchPort;
 import org.mockito.junit.jupiter.MockitoExtension;
-import service.StartMatchService;
+import port.out.StartMatchPort;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class StartMatchUseCaseTest {
-
+class StartMatchServiceTest {
     @Mock
     private StartMatchPort startMatchPort;
 
-    private StartMatchUseCase useCaseUnderTest;
+    @InjectMocks
+    private StartMatchService serviceUnderTest;
 
-    @BeforeEach
-    void setUp() {
-        useCaseUnderTest = new StartMatchService(startMatchPort);
-    }
     @Test
     void shouldCallPortWithCorrectMatchData(){
         //given
         String matchData = "Germany-Brazil";
         //when
-        useCaseUnderTest.apply(matchData);
+        serviceUnderTest.apply(matchData);
         //then
         verify(startMatchPort, times(1)).apply(matchData);
     }
-
 }
