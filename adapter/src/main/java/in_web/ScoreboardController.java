@@ -1,4 +1,4 @@
-package in.web;
+package in_web;
 
 import port.in.StartMatchUseCase;
 
