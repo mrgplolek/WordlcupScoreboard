@@ -11,6 +11,6 @@ public class ScoreboardController {
     }
 
     public void startMatch () {
-        startMatchUseCase.apply();
+        startMatchUseCase.apply(null);
     }
 }

@@ -3,5 +3,5 @@ package port.in;
 @FunctionalInterface
 public interface StartMatchUseCase {
 
-    void apply();
+    void apply(String matchData);
 }
