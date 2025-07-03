@@ -47,10 +47,10 @@ public class InMemoryDatabaseMock {
     }
 
     private FootballMatchEntity updateEntityWithNewScore(FootballMatchEntity matchToBeUpdated, int homeTeamScore, int awayTeamScore){
-        if (matchToBeUpdated.getHomeTeamScore() == homeTeamScore){
+        if (matchToBeUpdated.getHomeTeamScore() != homeTeamScore){
             matchToBeUpdated.setHomeTeamLastScore(Instant.now());
         }
-        if (matchToBeUpdated.getAwayTeamScore() == awayTeamScore){
+        if (matchToBeUpdated.getAwayTeamScore() != awayTeamScore){
             matchToBeUpdated.setAwayTeamLastScore(Instant.now());
         }
         matchToBeUpdated.setAwayTeamScore(awayTeamScore);

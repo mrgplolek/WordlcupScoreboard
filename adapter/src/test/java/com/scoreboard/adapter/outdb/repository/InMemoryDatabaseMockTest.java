@@ -61,7 +61,10 @@ public class InMemoryDatabaseMockTest {
         Boolean result = databaseMock.updateScore(homeTeam, awayTeam, 1, 0);
         // then
         assertThat(result).isTrue();
-
+        assertThat(databaseMock.getSummary().getFirst().getHomeTeamScore()).isEqualTo(1);
+        assertThat(databaseMock.getSummary().getFirst().getAwayTeamScore()).isEqualTo(0);
+        assertThat(databaseMock.getSummary().getFirst().getHomeTeamLastScore()).isNotNull();
+        assertThat(databaseMock.getSummary().getFirst().getAwayTeamLastScore()).isNull();
     }
 
     @Test
@@ -73,6 +76,7 @@ public class InMemoryDatabaseMockTest {
         Boolean result = databaseMock.finishMatch(homeTeam, awayTeam, Instant.parse("2025-07-03T13:09:15Z"));
         // then
         assertThat(result).isTrue();
+        assertThat(databaseMock.getSummary().getFirst().getFinishedAt()).isNotNull();
     }
 
     private void assertNewMatchEntity(FootballMatchEntity result, String homeTeam, String awayTeam) {
