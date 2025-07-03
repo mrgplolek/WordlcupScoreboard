@@ -1,6 +1,5 @@
 package com.scoreboard.adapter.outdb.adapter;
 
-import com.scoreboard.adapter.outdb.entity.FootballMatchEntity;
 import com.scoreboard.adapter.outdb.mapper.FootballMatchMapper;
 import com.scoreboard.adapter.outdb.repository.ScoreboardRepository;
 import com.scoreboard.core.domain.FootballMatch;
