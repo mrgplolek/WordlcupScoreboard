@@ -26,7 +26,7 @@ public class FootballMatchEntity {
     private Instant awayTeamLastScore;
 
     public static FootballMatchEntity createNewMatchEntity(String homeTeam, String awayTeam){
-        return null;
+        return new FootballMatchEntity(homeTeam, awayTeam, 0, 0, Instant.now(), null, null, null);
     }
 
     public String getHomeTeam() {
