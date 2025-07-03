@@ -1,6 +1,7 @@
-package in_web;
+package com.scoreboard.adapter.inweb;
 
-import port.in.StartMatchUseCase;
+
+import com.scoreboard.core.port.in.StartMatchUseCase;
 
 public class ScoreboardController {
 

@@ -1,4 +1,4 @@
-package port.in;
+package com.scoreboard.core.port.in;
 
 @FunctionalInterface
 public interface StartMatchUseCase {

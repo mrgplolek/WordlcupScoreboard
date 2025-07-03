@@ -1,7 +1,7 @@
-package service;
+package com.scoreboard.core.service;
 
-import port.in.StartMatchUseCase;
-import port.out.StartMatchPort;
+import com.scoreboard.core.port.in.StartMatchUseCase;
+import com.scoreboard.core.port.out.StartMatchPort;
 
 public class StartMatchService implements StartMatchUseCase {
 

@@ -1,4 +1,4 @@
-package org.scoreboard;
+package com.scoreboard.bootstrap;
 
 
 public class Main {
