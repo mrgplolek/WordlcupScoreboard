@@ -1,0 +1,108 @@
+package com.scoreboard.adapter.outdb.repository;
+
+import com.scoreboard.adapter.outdb.entity.FootballMatchEntity;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.time.Instant;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class InMemoryDatabaseMockTest {
+
+    InMemoryDatabaseMock databaseMock;
+
+    @BeforeEach
+    void setUpDb() {
+        String homeTeam = "Germany";
+        String awayTeam = "Poland";
+        FootballMatchEntity footballMatchEntity = FootballMatchEntity.createNewMatchEntity(homeTeam, awayTeam);
+        databaseMock.setDatabaseMock(List.of(footballMatchEntity));
+    }
+
+    @AfterEach
+    void cleanUpDb() {
+        databaseMock.cleanUpDb();
+    }
+
+    @Test
+    void shouldFindMatchByContestants() {
+        // given
+        String homeTeam = "Germany";
+        String awayTeam = "Poland";
+        // when
+        FootballMatchEntity result = databaseMock.findMatchByContestants(homeTeam, awayTeam);
+        // then
+        assertNewMatchEntity(result, homeTeam, awayTeam);
+    }
+
+    @Test
+    void shouldStartNewMatch() {
+        // given
+        String homeTeam = "Spain";
+        String awayTeam = "England";
+        // when
+        FootballMatchEntity result = databaseMock.startNewMatch(homeTeam, awayTeam);
+        // then
+        assertNewMatchEntity(result, homeTeam, awayTeam);
+        assertThat(databaseMock.getSummary().size()).isEqualTo(2);
+    }
+
+    @Test
+    void shouldUpdateScore() {
+        // given
+        String homeTeam = "Germany";
+        String awayTeam = "Poland";
+        Instant matchStartedAt = Instant.parse("2025-07-03T11:20:15Z");
+        Instant goalByHomeTeamAt = Instant.parse("2025-07-03T11:29:15Z");
+        FootballMatchEntity entityWithUpdatedScore = new FootballMatchEntity (homeTeam, awayTeam, 1, 0, matchStartedAt, null, goalByHomeTeamAt, null);
+        // when
+        FootballMatchEntity result = databaseMock.updateScore(entityWithUpdatedScore);
+        // then
+        assertThat(result).isNotNull();
+        assertThat(result.getHomeTeam()).isEqualTo(homeTeam);
+        assertThat(result.getAwayTeam()).isEqualTo(awayTeam);
+        assertThat(result.getHomeTeamScore()).isEqualTo(1);
+        assertThat(result.getAwayTeamScore()).isEqualTo(0);
+        assertThat(result.getStartedAt()).isNotNull();
+        assertThat(result.getFinishedAt()).isNull();
+        assertThat(result.getAwayTeamLastScore()).isNotNull();
+        assertThat(result.getHomeTeamLastScore()).isNull();
+    }
+
+    @Test
+    void shouldFinishMatch() {
+        // given
+        String homeTeam = "Germany";
+        String awayTeam = "Poland";
+        Instant matchStartedAt = Instant.parse("2025-07-03T11:20:15Z");
+        Instant finishedAt = Instant.parse("2025-07-03T13:09:15Z");
+        FootballMatchEntity entityWithUpdatedScore = new FootballMatchEntity (homeTeam, awayTeam, 0, 0, matchStartedAt, finishedAt, null, null);
+        // when
+        FootballMatchEntity result = databaseMock.updateScore(entityWithUpdatedScore);
+        // then
+        assertThat(result).isNotNull();
+        assertThat(result.getHomeTeam()).isEqualTo(homeTeam);
+        assertThat(result.getAwayTeam()).isEqualTo(awayTeam);
+        assertThat(result.getHomeTeamScore()).isEqualTo(0);
+        assertThat(result.getAwayTeamScore()).isEqualTo(0);
+        assertThat(result.getStartedAt()).isNotNull();
+        assertThat(result.getFinishedAt()).isNotNull();
+        assertThat(result.getAwayTeamLastScore()).isNull();
+        assertThat(result.getHomeTeamLastScore()).isNull();
+    }
+
+    private void assertNewMatchEntity(FootballMatchEntity result, String homeTeam, String awayTeam) {
+        assertThat(result).isNotNull();
+        assertThat(result.getHomeTeam()).isEqualTo(homeTeam);
+        assertThat(result.getAwayTeam()).isEqualTo(awayTeam);
+        assertThat(result.getHomeTeamScore()).isEqualTo(0);
+        assertThat(result.getAwayTeamScore()).isEqualTo(0);
+        assertThat(result.getStartedAt()).isNotNull();
+        assertThat(result.getFinishedAt()).isNull();
+        assertThat(result.getAwayTeamLastScore()).isNull();
+        assertThat(result.getHomeTeamLastScore()).isNull();
+    }
+}

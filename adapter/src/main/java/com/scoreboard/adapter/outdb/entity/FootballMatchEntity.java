@@ -4,26 +4,26 @@ import java.time.Instant;
 
 public class FootballMatchEntity {
 
-    FootballMatchEntity (String homeTeam, String awayTeam, int homeTeamScore, int awayTeamScore, Instant createdAt,
+    private String homeTeam;
+    private String awayTeam;
+    private int homeTeamScore;
+    private int awayTeamScore;
+    private Instant startedAt;
+    private Instant finishedAt;
+    private Instant homeTeamLastScore;
+    private Instant awayTeamLastScore;
+
+    public FootballMatchEntity (String homeTeam, String awayTeam, int homeTeamScore, int awayTeamScore, Instant startedAt,
                          Instant finishedAt, Instant homeTeamLastScore,  Instant awayTeamLastScore) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.homeTeamScore = homeTeamScore;
         this.awayTeamScore = awayTeamScore;
-        this.createdAt = createdAt;
+        this.startedAt = startedAt;
         this.finishedAt = finishedAt;
         this.homeTeamLastScore = homeTeamLastScore;
         this.awayTeamLastScore = awayTeamLastScore;
     }
-
-    private String homeTeam;
-    private String awayTeam;
-    private int homeTeamScore;
-    private int awayTeamScore;
-    private Instant createdAt;
-    private Instant finishedAt;
-    private Instant homeTeamLastScore;
-    private Instant awayTeamLastScore;
 
     public static FootballMatchEntity createNewMatchEntity(String homeTeam, String awayTeam){
         return new FootballMatchEntity(homeTeam, awayTeam, 0, 0, Instant.now(), null, null, null);
@@ -61,12 +61,12 @@ public class FootballMatchEntity {
         this.awayTeamScore = awayTeamScore;
     }
 
-    public Instant getCreatedAt() {
-        return createdAt;
+    public Instant getStartedAt() {
+        return startedAt;
     }
 
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
+    public void setStartedAt(Instant startedAt) {
+        this.startedAt = startedAt;
     }
 
     public Instant getFinishedAt() {

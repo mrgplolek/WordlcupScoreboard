@@ -19,7 +19,7 @@ public class FootballMatchEntityTest {
         assertThat(matchEntity.getAwayTeam()).isEqualTo(awayTeam);
         assertThat(matchEntity.getHomeTeamScore()).isEqualTo(0);
         assertThat(matchEntity.getAwayTeamScore()).isEqualTo(0);
-        assertThat(matchEntity.getCreatedAt()).isNotNull();
+        assertThat(matchEntity.getStartedAt()).isNotNull();
         assertThat(matchEntity.getFinishedAt()).isNull();
         assertThat(matchEntity.getAwayTeamLastScore()).isNull();
         assertThat(matchEntity.getHomeTeamLastScore()).isNull();
