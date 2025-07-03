@@ -6,20 +6,22 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class InMemoryDatabaseMockTest {
 
-    InMemoryDatabaseMock databaseMock;
+    InMemoryDatabaseMock databaseMock = new InMemoryDatabaseMock();
 
     @BeforeEach
     void setUpDb() {
         String homeTeam = "Germany";
         String awayTeam = "Poland";
         FootballMatchEntity footballMatchEntity = FootballMatchEntity.createNewMatchEntity(homeTeam, awayTeam);
-        databaseMock.setDatabaseMock(List.of(footballMatchEntity));
+        footballMatchEntity.setStartedAt(Instant.parse("2025-07-03T13:09:15Z"));
+        databaseMock.setDatabaseMock(new ArrayList<>(List.of(footballMatchEntity)));
     }
 
     @AfterEach
@@ -28,12 +30,12 @@ public class InMemoryDatabaseMockTest {
     }
 
     @Test
-    void shouldFindMatchByContestants() {
+    void shouldFindRunningMatchByContestants() {
         // given
         String homeTeam = "Germany";
         String awayTeam = "Poland";
         // when
-        FootballMatchEntity result = databaseMock.findMatchByContestants(homeTeam, awayTeam);
+        FootballMatchEntity result = databaseMock.findRunningMatchByContestants(homeTeam, awayTeam);
         // then
         assertNewMatchEntity(result, homeTeam, awayTeam);
     }
@@ -55,21 +57,11 @@ public class InMemoryDatabaseMockTest {
         // given
         String homeTeam = "Germany";
         String awayTeam = "Poland";
-        Instant matchStartedAt = Instant.parse("2025-07-03T11:20:15Z");
-        Instant goalByHomeTeamAt = Instant.parse("2025-07-03T11:29:15Z");
-        FootballMatchEntity entityWithUpdatedScore = new FootballMatchEntity (homeTeam, awayTeam, 1, 0, matchStartedAt, null, goalByHomeTeamAt, null);
         // when
-        FootballMatchEntity result = databaseMock.updateScore(entityWithUpdatedScore);
+        Boolean result = databaseMock.updateScore(homeTeam, awayTeam, 1, 0);
         // then
-        assertThat(result).isNotNull();
-        assertThat(result.getHomeTeam()).isEqualTo(homeTeam);
-        assertThat(result.getAwayTeam()).isEqualTo(awayTeam);
-        assertThat(result.getHomeTeamScore()).isEqualTo(1);
-        assertThat(result.getAwayTeamScore()).isEqualTo(0);
-        assertThat(result.getStartedAt()).isNotNull();
-        assertThat(result.getFinishedAt()).isNull();
-        assertThat(result.getAwayTeamLastScore()).isNotNull();
-        assertThat(result.getHomeTeamLastScore()).isNull();
+        assertThat(result).isTrue();
+
     }
 
     @Test
@@ -77,21 +69,10 @@ public class InMemoryDatabaseMockTest {
         // given
         String homeTeam = "Germany";
         String awayTeam = "Poland";
-        Instant matchStartedAt = Instant.parse("2025-07-03T11:20:15Z");
-        Instant finishedAt = Instant.parse("2025-07-03T13:09:15Z");
-        FootballMatchEntity entityWithUpdatedScore = new FootballMatchEntity (homeTeam, awayTeam, 0, 0, matchStartedAt, finishedAt, null, null);
         // when
-        FootballMatchEntity result = databaseMock.updateScore(entityWithUpdatedScore);
+        Boolean result = databaseMock.finishMatch(homeTeam, awayTeam, Instant.parse("2025-07-03T13:09:15Z"));
         // then
-        assertThat(result).isNotNull();
-        assertThat(result.getHomeTeam()).isEqualTo(homeTeam);
-        assertThat(result.getAwayTeam()).isEqualTo(awayTeam);
-        assertThat(result.getHomeTeamScore()).isEqualTo(0);
-        assertThat(result.getAwayTeamScore()).isEqualTo(0);
-        assertThat(result.getStartedAt()).isNotNull();
-        assertThat(result.getFinishedAt()).isNotNull();
-        assertThat(result.getAwayTeamLastScore()).isNull();
-        assertThat(result.getHomeTeamLastScore()).isNull();
+        assertThat(result).isTrue();
     }
 
     private void assertNewMatchEntity(FootballMatchEntity result, String homeTeam, String awayTeam) {
