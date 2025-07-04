@@ -68,6 +68,17 @@ public class InMemoryDatabaseMockTest {
     }
 
     @Test
+    void shouldNotUpdateScoreOfNonExistingMatch() {
+        // given
+        String homeTeam = "Croatia";
+        String awayTeam = "Argentina";
+        // when
+        Boolean result = databaseMock.updateScore(homeTeam, awayTeam, 1, 0);
+        // then
+        assertThat(result).isFalse();
+    }
+
+    @Test
     void shouldFinishMatch() {
         // given
         String homeTeam = "Germany";
