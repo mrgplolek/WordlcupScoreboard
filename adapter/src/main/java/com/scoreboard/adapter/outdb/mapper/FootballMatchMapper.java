@@ -6,6 +6,8 @@ import com.scoreboard.core.domain.FootballMatch;
 public class FootballMatchMapper {
 
     public FootballMatch map(FootballMatchEntity matchEntity) {
-        return null;
+        FootballMatch match = new FootballMatch(matchEntity.getHomeTeam(), matchEntity.getAwayTeam(), matchEntity.getHomeTeamScore(),
+                matchEntity.getAwayTeamScore(), matchEntity.getStartedAt(), matchEntity.getFinishedAt());
+        return match;
     }
 }
