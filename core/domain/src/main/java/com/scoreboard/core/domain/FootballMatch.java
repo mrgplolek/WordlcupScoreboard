@@ -18,6 +18,13 @@ public class FootballMatch {
         this.awayTeamScore = awayTeamScore;
     }
 
+    public FootballMatch (String homeTeam, String awayTeam, int homeTeamScore, int awayTeamScore, Instant startedAt, Instant finishedAt) {
+        this.homeTeam = homeTeam;
+        this.awayTeam = awayTeam;
+        this.homeTeamScore = homeTeamScore;
+        this.awayTeamScore = awayTeamScore;
+    }
+
     public String getHomeTeam() {
         return homeTeam;
     }
