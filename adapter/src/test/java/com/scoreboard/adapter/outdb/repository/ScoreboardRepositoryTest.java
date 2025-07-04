@@ -29,17 +29,18 @@ public class ScoreboardRepositoryTest {
         footballMatchEntity3.setStartedAt(Instant.parse("2025-07-01T13:09:15Z"));
         footballMatchEntity3.setFinishedAt(Instant.parse("2025-07-01T14:00:15Z"));
         FootballMatchEntity footballMatchEntity4 = FootballMatchEntity.createNewMatchEntity("England", "Portugal");
-        footballMatchEntity3.setStartedAt(Instant.parse("2025-07-01T15:09:15Z"));
-        footballMatchEntity3.setFinishedAt(Instant.parse("2025-07-01T16:00:15Z"));
+        footballMatchEntity4.setStartedAt(Instant.parse("2025-07-01T15:09:15Z"));
+        footballMatchEntity4.setFinishedAt(Instant.parse("2025-07-01T16:00:15Z"));
         scoreboardRepository.databaseMock.setDatabaseMock(new ArrayList<>(List.of(footballMatchEntity1, footballMatchEntity2, footballMatchEntity3, footballMatchEntity4)));
     }
 
     @Test
     void shouldReturnRunningMatchByContestants() {
         //given
-        String contestants = "Spain-Poland";
+        String homeTeam = "Spain";
+        String awayTeam = "Poland";
         //when
-        FootballMatchEntity matchEntity = scoreboardRepository.findRunningMatchByContestants(contestants);
+        FootballMatchEntity matchEntity = scoreboardRepository.findRunningMatchByContestants(homeTeam, awayTeam);
         //then
         assertThat(matchEntity).isNotNull();
         assertThat(matchEntity.getHomeTeam()).contains("Spain");
@@ -50,9 +51,10 @@ public class ScoreboardRepositoryTest {
     @Test
     void shouldReturnNullWhenGivenFinishedMatchContestants() {
         //given
-        String contestants = "England-Portugal";
+        String homeTeam = "England";
+        String awayTeam = "Portugal";
         //when
-        FootballMatchEntity matchEntity = scoreboardRepository.findRunningMatchByContestants(contestants);
+        FootballMatchEntity matchEntity = scoreboardRepository.findRunningMatchByContestants(homeTeam, awayTeam);
         //then
         assertThat(matchEntity).isNull();
     }
@@ -60,9 +62,10 @@ public class ScoreboardRepositoryTest {
     @Test
     void shouldStartNewMatch() {
         //given
-        String contestants = "Ukraine-Italy";
+        String homeTeam = "Ukraine";
+        String awayTeam = "Italy";
         //when
-        FootballMatchEntity matchEntity = scoreboardRepository.startNewMatch(contestants);
+        FootballMatchEntity matchEntity = scoreboardRepository.startNewMatch(homeTeam, awayTeam);
         //then
         assertThat(matchEntity).isNotNull();
         assertThat(matchEntity.getHomeTeam()).isEqualTo("Ukraine");
@@ -86,7 +89,7 @@ public class ScoreboardRepositoryTest {
         assertThat(updatedMatch.getHomeTeamScore()).isEqualTo(0);
         assertThat(updatedMatch.getAwayTeamScore()).isEqualTo(1);
         assertThat(updatedMatch.getHomeTeamLastScore()).isNull();
-        assertThat(updatedMatch.getHomeTeamLastScore()).isNotNull();
+        assertThat(updatedMatch.getAwayTeamLastScore()).isNotNull();
     }
 
     @Test
