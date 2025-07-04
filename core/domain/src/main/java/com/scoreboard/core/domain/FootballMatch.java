@@ -23,6 +23,8 @@ public class FootballMatch {
         this.awayTeam = awayTeam;
         this.homeTeamScore = homeTeamScore;
         this.awayTeamScore = awayTeamScore;
+        this.startedAt = startedAt;
+        this.finishedAt = finishedAt;
     }
 
     public String getHomeTeam() {
