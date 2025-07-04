@@ -24,14 +24,14 @@ public class InMemoryDatabaseMock {
 
     public Boolean updateScore(String homeTeam, String awayTeam, int homeTeamScore, int awayTeamScore){
         return databaseMock.stream()
-                .filter(match -> match.getHomeTeam().equals(homeTeam) && match.getAwayTeam().equals(awayTeam) && match.getFinishedAt() == null)
+                .filter(match -> match.getHomeTeam().equals(homeTeam) && match.getAwayTeam().equals(awayTeam))
                 .map(matchEntity -> updateEntityWithNewScore(matchEntity, homeTeamScore, awayTeamScore))
                 .findFirst().isPresent();
     }
 
     public Boolean finishMatch(String homeTeam, String awayTeam, Instant startedAt){
         return databaseMock.stream()
-                .filter(match -> match.getHomeTeam().equals(homeTeam) && match.getAwayTeam().equals(awayTeam) && match.getStartedAt().equals(startedAt))
+                .filter(match -> match.getHomeTeam().equals(homeTeam) && match.getAwayTeam().equals(awayTeam))
                 .map(this::updateEndedMatch)
                 .findFirst().isPresent();
     }
