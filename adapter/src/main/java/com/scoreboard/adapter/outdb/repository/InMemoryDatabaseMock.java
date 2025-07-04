@@ -29,9 +29,9 @@ public class InMemoryDatabaseMock {
                 .findFirst().isPresent();
     }
 
-    public Boolean finishMatch(String homeTeam, String awayTeam, Instant startedAt){
+    public Boolean finishMatch(String homeTeam, String awayTeam){
         return databaseMock.stream()
-                .filter(match -> match.getHomeTeam().equals(homeTeam) && match.getAwayTeam().equals(awayTeam))
+                .filter(match -> match.getHomeTeam().equals(homeTeam) && match.getAwayTeam().equals(awayTeam) && match.getFinishedAt() == null)
                 .map(this::updateEndedMatch)
                 .findFirst().isPresent();
     }

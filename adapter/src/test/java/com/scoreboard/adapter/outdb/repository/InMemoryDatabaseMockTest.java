@@ -19,9 +19,12 @@ public class InMemoryDatabaseMockTest {
     void setUpDb() {
         String homeTeam = "Germany";
         String awayTeam = "Poland";
-        FootballMatchEntity footballMatchEntity = FootballMatchEntity.createNewMatchEntity(homeTeam, awayTeam);
-        footballMatchEntity.setStartedAt(Instant.parse("2025-07-03T13:09:15Z"));
-        databaseMock.setDatabaseMock(new ArrayList<>(List.of(footballMatchEntity)));
+        FootballMatchEntity footballMatchEntity1 = FootballMatchEntity.createNewMatchEntity(homeTeam, awayTeam);
+        footballMatchEntity1.setStartedAt(Instant.parse("2025-07-02T13:09:15Z"));
+        FootballMatchEntity footballMatchEntity2 = FootballMatchEntity.createNewMatchEntity(homeTeam, awayTeam);
+        footballMatchEntity2.setStartedAt(Instant.parse("2025-07-03T13:09:15Z"));
+        footballMatchEntity2.setFinishedAt(Instant.parse("2025-07-04T13:09:15Z"));
+        databaseMock.setDatabaseMock(new ArrayList<>(List.of(footballMatchEntity1, footballMatchEntity2)));
     }
 
     @AfterEach
@@ -49,7 +52,7 @@ public class InMemoryDatabaseMockTest {
         FootballMatchEntity result = databaseMock.startNewMatch(homeTeam, awayTeam);
         // then
         assertNewMatchEntity(result, homeTeam, awayTeam);
-        assertThat(databaseMock.getSummary().size()).isEqualTo(2);
+        assertThat(databaseMock.getSummary().size()).isEqualTo(3);
     }
 
     @Test
@@ -84,7 +87,7 @@ public class InMemoryDatabaseMockTest {
         String homeTeam = "Germany";
         String awayTeam = "Poland";
         // when
-        Boolean result = databaseMock.finishMatch(homeTeam, awayTeam, Instant.parse("2025-07-03T13:09:15Z"));
+        Boolean result = databaseMock.finishMatch(homeTeam, awayTeam);
         // then
         assertThat(result).isTrue();
         assertThat(databaseMock.getSummary().getFirst().getFinishedAt()).isNotNull();
