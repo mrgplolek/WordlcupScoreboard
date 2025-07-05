@@ -8,7 +8,22 @@ import java.util.List;
 
 public class ScoreboardRepository {
 
+    private static ScoreboardRepository instance;
+
     InMemoryDatabaseMock databaseMock = new InMemoryDatabaseMock();
+
+    // Private constructor prevents direct instantiation
+    private ScoreboardRepository() {
+        databaseMock = new InMemoryDatabaseMock();
+    }
+
+    // Simple lazy initialization
+    public static ScoreboardRepository getInstance() {
+        if (instance == null) {
+            instance = new ScoreboardRepository();
+        }
+        return instance;
+    }
 
     public FootballMatchEntity findRunningMatchByContestants(String homeTeam, String awayTeam) {
         return databaseMock.findRunningMatchByContestants(homeTeam, awayTeam);

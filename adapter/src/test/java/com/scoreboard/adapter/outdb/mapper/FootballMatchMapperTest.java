@@ -10,8 +10,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class FootballMatchMapperTest {
 
-    FootballMatchMapper mapperUnderTest = new FootballMatchMapper();
-
     @Test
     void shouldMapEntityIntoDomainObject() {
         //given
@@ -25,7 +23,7 @@ public class FootballMatchMapperTest {
         entity.setHomeTeamScore(3);
         entity.setAwayTeamScore(4);
         //when
-        FootballMatch domainObject = mapperUnderTest.map(entity);
+        FootballMatch domainObject =  FootballMatchMapper.map(entity);
         //then
         assertThat(domainObject.getHomeTeam()).isEqualTo(homeTeam);
         assertThat(domainObject.getAwayTeam()).isEqualTo(awayTeam);

@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ScoreboardRepositoryTest {
 
-    ScoreboardRepository scoreboardRepository = new ScoreboardRepository();
+    ScoreboardRepository scoreboardRepository = ScoreboardRepository.getInstance();
 
     @BeforeEach
     void setUpDatabaseMock() {

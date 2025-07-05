@@ -26,7 +26,8 @@ public class InMemoryDatabaseMock {
         return databaseMock.stream()
                 .filter(match -> match.getHomeTeam().equals(homeTeam) && match.getAwayTeam().equals(awayTeam))
                 .map(matchEntity -> updateEntityWithNewScore(matchEntity, homeTeamScore, awayTeamScore))
-                .findFirst().isPresent();
+                .findFirst()
+                .isPresent();
     }
 
     public Boolean finishMatch(String homeTeam, String awayTeam){

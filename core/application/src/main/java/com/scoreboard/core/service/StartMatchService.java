@@ -12,8 +12,8 @@ public class StartMatchService implements StartMatchUseCase {
     }
 
     @Override
-    public void apply(String matchData) {
-        startMatchPort.apply(matchData);
+    public void apply(String homeTeam, String awayTeam) {
+        startMatchPort.apply(homeTeam, awayTeam);
     }
 }
 

@@ -5,5 +5,5 @@ import com.scoreboard.core.domain.FootballMatch;
 @FunctionalInterface
 public interface StartMatchPort {
 
-        FootballMatch apply(String matchData);
+        FootballMatch apply(String homeTeam, String awayTeam);
 }
