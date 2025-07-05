@@ -32,7 +32,7 @@ public class FindRunningMatchByContestantsAdapterTest {
         String homeTeam = "Germany";
         String awayTeam = "France";
         //when
-        FootballMatch result = adapterUnderTest.apply(awayTeam, homeTeam);
+        FootballMatch result = adapterUnderTest.apply(homeTeam, awayTeam);
         //then
         assertThat(result).isNotNull();
         assertThat(result.getHomeTeam()).isEqualTo(homeTeam);
