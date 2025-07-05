@@ -22,10 +22,11 @@ class StartMatchServiceTest {
     @Test
     void shouldCallPortWithCorrectMatchData(){
         //given
-        String matchData = "Germany-Brazil";
+        String homeTeam = "Germany";
+        String awayTeam = "Brazil";
         //when
-        serviceUnderTest.apply(matchData);
+        serviceUnderTest.apply(homeTeam,awayTeam);
         //then
-        verify(startMatchPort, times(1)).apply(matchData);
+        verify(startMatchPort, times(1)).apply(homeTeam, awayTeam);
     }
 }
