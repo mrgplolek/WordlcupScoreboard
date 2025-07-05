@@ -32,7 +32,7 @@ class StartMatchAdapterTest {
     @Test
     void shouldStartNewMatch() {
         //given
-        String homeTeam = "Germany";
+        String homeTeam = "Greece";
         String awayTeam = "Brazil";
         FootballMatchEntity mockedEntity = provideEntityMock(homeTeam, awayTeam);
 
@@ -41,7 +41,7 @@ class StartMatchAdapterTest {
         //then
 
         assertThat(footballMatch).isNotNull();
-        assertThat(footballMatch.getHomeTeam()).matches("Germany");
+        assertThat(footballMatch.getHomeTeam()).matches("Greece");
         assertThat(footballMatch.getAwayTeam()).matches("Brazil");
         assertThat(footballMatch.getAwayTeamScore()).isEqualTo(0);
         assertThat(footballMatch.getHomeTeamScore()).isEqualTo(0);
