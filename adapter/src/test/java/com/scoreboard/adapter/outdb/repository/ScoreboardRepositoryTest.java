@@ -3,35 +3,26 @@ package com.scoreboard.adapter.outdb.repository;
 
 import com.scoreboard.adapter.outdb.entity.FootballMatchEntity;
 import com.scoreboard.core.domain.FootballMatch;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ScoreboardRepositoryTest {
 
-    ScoreboardRepository scoreboardRepository = ScoreboardRepository.getInstance();
+    static ScoreboardRepository scoreboardRepository = ScoreboardRepository.getInstance();
 
-    @BeforeEach
-    void setUpDatabaseMock() {
+    @BeforeAll
+    static void setUpDatabaseMock() {
         scoreboardRepository.databaseMock = new InMemoryDatabaseMock();
-        FootballMatchEntity footballMatchEntity1 = FootballMatchEntity.createNewMatchEntity("Spain", "Poland");
-        footballMatchEntity1.setStartedAt(Instant.parse("2025-07-03T13:09:15Z"));
-        FootballMatchEntity footballMatchEntity2 = FootballMatchEntity.createNewMatchEntity("Germany", "France");
-        footballMatchEntity2.setHomeTeamScore(3);
-        footballMatchEntity2.setHomeTeamLastScore(Instant.parse("2025-07-07T13:34:15Z"));
-        footballMatchEntity2.setStartedAt(Instant.parse("2025-07-07T13:09:15Z"));
-        FootballMatchEntity footballMatchEntity3 = FootballMatchEntity.createNewMatchEntity("Spain", "Poland");
-        footballMatchEntity3.setStartedAt(Instant.parse("2025-07-01T13:09:15Z"));
-        footballMatchEntity3.setFinishedAt(Instant.parse("2025-07-01T14:00:15Z"));
-        FootballMatchEntity footballMatchEntity4 = FootballMatchEntity.createNewMatchEntity("England", "Portugal");
-        footballMatchEntity4.setStartedAt(Instant.parse("2025-07-01T15:09:15Z"));
-        footballMatchEntity4.setFinishedAt(Instant.parse("2025-07-01T16:00:15Z"));
-        scoreboardRepository.databaseMock.setDatabaseMock(new ArrayList<>(List.of(footballMatchEntity1, footballMatchEntity2, footballMatchEntity3, footballMatchEntity4)));
+        scoreboardRepository.setupTestData();
+    }
+
+    @AfterAll
+    static void cleanUp() {
+        scoreboardRepository.cleanUpDb();
     }
 
     @Test
