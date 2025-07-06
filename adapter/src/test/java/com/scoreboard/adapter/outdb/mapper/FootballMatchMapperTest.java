@@ -32,4 +32,13 @@ public class FootballMatchMapperTest {
         assertThat(domainObject.getFinishedAt()).isEqualTo("2025-07-01T14:01:15Z");
         assertThat(domainObject.getStartedAt()).isEqualTo("2025-07-01T13:09:15Z");
     }
+
+    @Test
+    void shouldReturnNullWhenNullIsProvided() {
+        //given
+        //when
+        FootballMatch domainObject = FootballMatchMapper.map(null);
+        //then
+        assertThat(domainObject).isNull();
+    }
 }
