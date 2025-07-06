@@ -7,6 +7,14 @@
 
     <groupId>com.scoreboard.bootstrap</groupId>
     <artifactId>bootstrap</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>com.scoreboard.adapter</groupId>
+            <artifactId>adapter</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
