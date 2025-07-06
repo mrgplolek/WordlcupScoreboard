@@ -1,5 +1,6 @@
 package com.scoreboard.core.service;
 
+import com.scoreboard.core.domain.FootballMatch;
 import com.scoreboard.core.domain.exception.ContestantIsAlreadyInPlayException;
 import com.scoreboard.core.port.in.StartMatchUseCase;
 import com.scoreboard.core.port.out.FindRunningMatchByContestantPort;
@@ -25,7 +26,7 @@ public class StartMatchService implements StartMatchUseCase {
     }
 
     @Override
-    public void apply(String homeTeam, String awayTeam) {
+    public FootballMatch apply(String homeTeam, String awayTeam) {
         boolean isHomeTeamAlreadyInGame = findRunningMatchByContestantPort.apply(homeTeam) != null;
         boolean isAwayTeamAlreadyInGame = findRunningMatchByContestantPort.apply(awayTeam) != null;
         if (isHomeTeamAlreadyInGame){
@@ -34,7 +35,7 @@ public class StartMatchService implements StartMatchUseCase {
         if (isAwayTeamAlreadyInGame){
             throw new ContestantIsAlreadyInPlayException("%s national team is already involved in running match.".formatted(awayTeam));
         }
-        startMatchPort.apply(homeTeam, awayTeam);
+        return startMatchPort.apply(homeTeam, awayTeam);
     }
 }
 
