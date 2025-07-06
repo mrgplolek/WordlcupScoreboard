@@ -1,29 +1,17 @@
 package com.scoreboard.adapter.outdb.repository;
 
 
+import com.scoreboard.adapter.outdb.adapter.BaseAdapterTest;
 import com.scoreboard.adapter.outdb.entity.FootballMatchEntity;
 import com.scoreboard.core.domain.FootballMatch;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ScoreboardRepositoryTest {
-
-    static ScoreboardRepository scoreboardRepository = ScoreboardRepository.getInstance();
-
-    @BeforeAll
-    static void setUpDatabaseMock() {
-        scoreboardRepository.databaseMock = new InMemoryDatabaseMock();
-        scoreboardRepository.setupTestData();
-    }
-
-    @AfterAll
-    static void cleanUp() {
-        scoreboardRepository.cleanUpDb();
-    }
+public class ScoreboardRepositoryTest extends BaseAdapterTest {
 
     @Test
     void shouldReturnRunningMatchByContestants() {
@@ -31,23 +19,24 @@ public class ScoreboardRepositoryTest {
         String homeTeam = "Spain";
         String awayTeam = "Poland";
         //when
-        FootballMatchEntity matchEntity = scoreboardRepository.findRunningMatchByContestants(homeTeam, awayTeam);
+        Optional<FootballMatchEntity> matchEntity = scoreboardRepository.findRunningMatchByContestants(homeTeam, awayTeam);
         //then
         assertThat(matchEntity).isNotNull();
-        assertThat(matchEntity.getHomeTeam()).contains("Spain");
-        assertThat(matchEntity.getAwayTeam()).contains("Poland");
-        assertThat(matchEntity.getFinishedAt()).isNull();
+        assertThat(matchEntity).isPresent();
+        assertThat(matchEntity.get().getHomeTeam()).contains("Spain");
+        assertThat(matchEntity.get().getAwayTeam()).contains("Poland");
+        assertThat(matchEntity.get().getFinishedAt()).isNull();
     }
 
     @Test
-    void shouldReturnNullWhenGivenFinishedMatchContestants() {
+    void shouldReturnOptionalEmptyWhenGivenFinishedMatchContestants() {
         //given
         String homeTeam = "England";
         String awayTeam = "Portugal";
         //when
-        FootballMatchEntity matchEntity = scoreboardRepository.findRunningMatchByContestants(homeTeam, awayTeam);
+        Optional<FootballMatchEntity> matchEntity = scoreboardRepository.findRunningMatchByContestants(homeTeam, awayTeam);
         //then
-        assertThat(matchEntity).isNull();
+        assertThat(matchEntity).isEmpty();
     }
 
     @Test
@@ -55,22 +44,23 @@ public class ScoreboardRepositoryTest {
         //given
         String contestant = "Spain";
         //when
-        FootballMatchEntity matchEntity = scoreboardRepository.findRunningMatchByContestant(contestant);
+        Optional<FootballMatchEntity> matchEntity = scoreboardRepository.findRunningMatchByContestant(contestant);
         //then
         assertThat(matchEntity).isNotNull();
-        assertThat(matchEntity.getHomeTeam()).contains("Spain");
-        assertThat(matchEntity.getAwayTeam()).contains("Poland");
-        assertThat(matchEntity.getFinishedAt()).isNull();
+        assertThat(matchEntity).isPresent();
+        assertThat(matchEntity.get().getHomeTeam()).contains("Spain");
+        assertThat(matchEntity.get().getAwayTeam()).contains("Poland");
+        assertThat(matchEntity.get().getFinishedAt()).isNull();
     }
 
     @Test
-    void shouldReturnNullWhenGivenFinishedMatchContestant() {
+    void shouldReturnOptionalEmptyWhenGivenFinishedMatchContestant() {
         //given
         String contestant = "Sweden";
         //when
-        FootballMatchEntity matchEntity = scoreboardRepository.findRunningMatchByContestant(contestant);
+        Optional<FootballMatchEntity> matchEntity = scoreboardRepository.findRunningMatchByContestant(contestant);
         //then
-        assertThat(matchEntity).isNull();
+        assertThat(matchEntity).isEmpty();
     }
 
     @Test
@@ -95,13 +85,14 @@ public class ScoreboardRepositoryTest {
         //given
         FootballMatch footballMatch = new FootballMatch("Spain", "Poland", 0, 1);
         //when
-        FootballMatchEntity result = scoreboardRepository.updateScore(footballMatch);
+        Optional<FootballMatchEntity> matchEntity = scoreboardRepository.updateScore(footballMatch);
         //then
-        assertThat(result).isNotNull();
-        assertThat(result.getHomeTeamScore()).isEqualTo(0);
-        assertThat(result.getAwayTeamScore()).isEqualTo(1);
-        assertThat(result.getHomeTeamLastScore()).isNull();
-        assertThat(result.getAwayTeamLastScore()).isNotNull();
+        assertThat(matchEntity).isNotNull();
+        assertThat(matchEntity).isPresent();
+        assertThat(matchEntity.get().getHomeTeamScore()).isEqualTo(0);
+        assertThat(matchEntity.get().getAwayTeamScore()).isEqualTo(1);
+        assertThat(matchEntity.get().getHomeTeamLastScore()).isNull();
+        assertThat(matchEntity.get().getAwayTeamLastScore()).isNotNull();
     }
 
     @Test

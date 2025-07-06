@@ -6,6 +6,8 @@ import com.scoreboard.core.port.in.FinishMatchUseCase;
 import com.scoreboard.core.port.out.FindRunningMatchByContestantsPort;
 import com.scoreboard.core.port.out.FinishMatchPort;
 
+import java.util.Optional;
+
 public class FinishMatchService implements FinishMatchUseCase {
 
     private static FinishMatchService instance;
@@ -27,10 +29,10 @@ public class FinishMatchService implements FinishMatchUseCase {
 
     @Override
     public boolean apply(String homeTeam, String awayTeam) {
-        FootballMatch match = findRunningMatchByContestantsPort.apply(homeTeam, awayTeam);
-        if (match == null) {
+        Optional<FootballMatch> match = findRunningMatchByContestantsPort.apply(homeTeam, awayTeam);
+        if (match.isEmpty()) {
             throw new MatchNotFoundException("There is no currently running match between %s and %s.".formatted(homeTeam, awayTeam));
         }
-        return finishMatchPort.apply(match);
+        return finishMatchPort.apply(match.get());
     }
 }

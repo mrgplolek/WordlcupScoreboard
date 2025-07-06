@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -38,9 +39,10 @@ public class InMemoryDatabaseMockTest {
         String homeTeam = "Germany";
         String awayTeam = "Poland";
         // when
-        FootballMatchEntity result = databaseMock.findRunningMatchByContestants(homeTeam, awayTeam);
+        Optional<FootballMatchEntity> result = databaseMock.findRunningMatchByContestants(homeTeam, awayTeam);
         // then
-        assertNewMatchEntity(result, homeTeam, awayTeam);
+        assertThat(result.isPresent()).isTrue();
+        assertNewMatchEntity(result.get(), homeTeam, awayTeam);
     }
 
     @Test
@@ -48,9 +50,10 @@ public class InMemoryDatabaseMockTest {
         // given
         String contestant = "Poland";
         // when
-        FootballMatchEntity result = databaseMock.findRunningMatchByContestant(contestant);
+        Optional<FootballMatchEntity> result = databaseMock.findRunningMatchByContestant(contestant);
         // then
-        assertNewMatchEntity(result, "Germany", contestant);
+        assertThat(result.isPresent()).isTrue();
+        assertNewMatchEntity(result.get(), "Germany", contestant);
     }
 
     @Test
@@ -71,14 +74,15 @@ public class InMemoryDatabaseMockTest {
         String homeTeam = "Germany";
         String awayTeam = "Poland";
         // when
-        FootballMatchEntity result = databaseMock.updateScore(homeTeam, awayTeam, 1, 0);
+        Optional<FootballMatchEntity> result = databaseMock.updateScore(homeTeam, awayTeam, 1, 0);
         // then
         assertThat(result).isNotNull();
-        assertThat(result).isEqualTo(databaseMock.getSummary().getFirst());
-        assertThat(result.getHomeTeamScore()).isEqualTo(1);
-        assertThat(result.getAwayTeamScore()).isEqualTo(0);
-        assertThat(result.getHomeTeamLastScore()).isNotNull();
-        assertThat(result.getAwayTeamLastScore()).isNull();
+        assertThat(result.isPresent()).isTrue();
+        assertThat(result.get()).isEqualTo(databaseMock.getSummary().getFirst());
+        assertThat(result.get().getHomeTeamScore()).isEqualTo(1);
+        assertThat(result.get().getAwayTeamScore()).isEqualTo(0);
+        assertThat(result.get().getHomeTeamLastScore()).isNotNull();
+        assertThat(result.get().getAwayTeamLastScore()).isNull();
     }
 
     @Test
@@ -87,9 +91,9 @@ public class InMemoryDatabaseMockTest {
         String homeTeam = "Croatia";
         String awayTeam = "Argentina";
         // when
-        FootballMatchEntity result = databaseMock.updateScore(homeTeam, awayTeam, 1, 0);
+        Optional<FootballMatchEntity> result = databaseMock.updateScore(homeTeam, awayTeam, 1, 0);
         // then
-        assertThat(result).isNull();
+        assertThat(result).isEmpty();
     }
 
     @Test

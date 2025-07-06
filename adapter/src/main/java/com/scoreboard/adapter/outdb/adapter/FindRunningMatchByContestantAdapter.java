@@ -5,6 +5,8 @@ import com.scoreboard.adapter.outdb.repository.ScoreboardRepository;
 import com.scoreboard.core.domain.FootballMatch;
 import com.scoreboard.core.port.out.FindRunningMatchByContestantPort;
 
+import java.util.Optional;
+
 public class FindRunningMatchByContestantAdapter implements FindRunningMatchByContestantPort {
 
     private static FindRunningMatchByContestantAdapter instance;
@@ -19,7 +21,7 @@ public class FindRunningMatchByContestantAdapter implements FindRunningMatchByCo
         return instance;
     }
     @Override
-    public FootballMatch apply(String contestant) {
-        return FootballMatchMapper.map(scoreboardRepository.findRunningMatchByContestant(contestant));
+    public Optional<FootballMatch> apply(String contestant) {
+        return scoreboardRepository.findRunningMatchByContestant(contestant).map(FootballMatchMapper::map);
     }
 }

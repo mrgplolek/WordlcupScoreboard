@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.Instant;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
@@ -32,22 +33,22 @@ public class UpdateMatchServiceTest {
     @Test
     void shouldUpdateMatch(){
         //given
-        FootballMatch matchToBeUpdated = new FootballMatch("Poland", "Germany", 0, 0, Instant.parse("2025-07-01T14:49:15Z"), null);
+        Optional<FootballMatch> matchToBeUpdated = Optional.of(new FootballMatch("Poland", "Germany", 0, 0, Instant.parse("2025-07-01T14:49:15Z"), null));
         FootballMatch matchUpdateData = new FootballMatch("Poland", "Germany", 1, 0);
-        FootballMatch matchAfterUpdate = new FootballMatch("Poland", "Germany", 1, 0, Instant.parse("2025-07-01T14:49:15Z"), null);
+        Optional<FootballMatch> matchAfterUpdate = Optional.of(new FootballMatch("Poland", "Germany", 1, 0, Instant.parse("2025-07-01T14:49:15Z"), null));
         when(findRunningMatchByContestantsPort.apply("Poland", "Germany")).thenReturn(matchToBeUpdated);
         when(updateMatchPort.apply(matchUpdateData)).thenReturn(matchAfterUpdate);
         //when
         FootballMatch result = serviceUnderTest.apply(matchUpdateData);
         //then
-        assertThat(result).isNotNull().isEqualTo(matchAfterUpdate);
+        assertThat(result).isNotNull().isEqualTo(matchAfterUpdate.get());
     }
 
     @Test
     void shouldThrowExceptionWhenMatchNotFound() {
         //given
         FootballMatch matchUpdateData = new FootballMatch("Poland", "Germany", 1, 0);
-        when(findRunningMatchByContestantsPort.apply("Poland", "Germany")).thenReturn(null);
+        when(findRunningMatchByContestantsPort.apply("Poland", "Germany")).thenReturn(Optional.empty());
         //when
         Throwable throwable = catchThrowable(() -> {
             serviceUnderTest.apply(matchUpdateData);
@@ -60,7 +61,7 @@ public class UpdateMatchServiceTest {
     void shouldThrowExceptionWhenUpdateContainsMoreThanOneGoal(){
         //given
         FootballMatch matchUpdateData = new FootballMatch("Poland", "Germany", 1, 1);
-        FootballMatch matchToBeUpdated = new FootballMatch("Poland", "Germany", 0, 0, Instant.parse("2025-07-01T14:49:15Z"), null);
+        Optional<FootballMatch> matchToBeUpdated = Optional.of(new FootballMatch("Poland", "Germany", 0, 0, Instant.parse("2025-07-01T14:49:15Z"), null));
         when(findRunningMatchByContestantsPort.apply("Poland", "Germany")).thenReturn(matchToBeUpdated);
         //when
         Throwable throwable = catchThrowable(() -> {
@@ -74,7 +75,7 @@ public class UpdateMatchServiceTest {
     void shouldThrowExceptionWhenUpdateContainsNegativeNumber(){
         //given
         FootballMatch matchUpdateData = new FootballMatch("Poland", "Germany", -1, 0);
-        FootballMatch matchToBeUpdated = new FootballMatch("Poland", "Germany", 0, 0, Instant.parse("2025-07-01T14:49:15Z"), null);
+        Optional<FootballMatch> matchToBeUpdated = Optional.of(new FootballMatch("Poland", "Germany", 0, 0, Instant.parse("2025-07-01T14:49:15Z"), null));
         when(findRunningMatchByContestantsPort.apply("Poland", "Germany")).thenReturn(matchToBeUpdated);
         //when
         Throwable throwable = catchThrowable(() -> {

@@ -4,6 +4,8 @@ import com.scoreboard.core.domain.FootballMatch;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class FindRunningMatchByContestantAdapterTest extends BaseAdapterTest {
@@ -21,13 +23,14 @@ public class FindRunningMatchByContestantAdapterTest extends BaseAdapterTest {
         String homeTeam = "Germany";
         String awayTeam = "France";
         //when
-        FootballMatch result = adapterUnderTest.apply(homeTeam);
+        Optional<FootballMatch> result = adapterUnderTest.apply(homeTeam);
         //then
         assertThat(result).isNotNull();
-        assertThat(result.getHomeTeam()).isEqualTo(homeTeam);
-        assertThat(result.getAwayTeam()).isEqualTo(awayTeam);
-        assertThat(result.getHomeTeamScore()).isEqualTo(3);
-        assertThat(result.getAwayTeamScore()).isEqualTo(0);
+        assertThat(result).isPresent();
+        assertThat(result.get().getHomeTeam()).isEqualTo(homeTeam);
+        assertThat(result.get().getAwayTeam()).isEqualTo(awayTeam);
+        assertThat(result.get().getHomeTeamScore()).isEqualTo(3);
+        assertThat(result.get().getAwayTeamScore()).isEqualTo(0);
 
     }
 
@@ -37,13 +40,14 @@ public class FindRunningMatchByContestantAdapterTest extends BaseAdapterTest {
         String homeTeam = "Germany";
         String awayTeam = "France";
         //when
-        FootballMatch result = adapterUnderTest.apply(awayTeam);
+        Optional<FootballMatch> result = adapterUnderTest.apply(awayTeam);
         //then
         assertThat(result).isNotNull();
-        assertThat(result.getHomeTeam()).isEqualTo(homeTeam);
-        assertThat(result.getAwayTeam()).isEqualTo(awayTeam);
-        assertThat(result.getHomeTeamScore()).isEqualTo(3);
-        assertThat(result.getAwayTeamScore()).isEqualTo(0);
+        assertThat(result).isPresent();
+        assertThat(result.get().getHomeTeam()).isEqualTo(homeTeam);
+        assertThat(result.get().getAwayTeam()).isEqualTo(awayTeam);
+        assertThat(result.get().getHomeTeamScore()).isEqualTo(3);
+        assertThat(result.get().getAwayTeamScore()).isEqualTo(0);
 
     }
 
@@ -52,8 +56,8 @@ public class FindRunningMatchByContestantAdapterTest extends BaseAdapterTest {
         //given
         String contestant = "Chile";
         //when
-        FootballMatch result = adapterUnderTest.apply(contestant);
+        Optional<FootballMatch> result = adapterUnderTest.apply(contestant);
         //then
-        assertThat(result).isNull();
+        assertThat(result).isEmpty();
     }
 }

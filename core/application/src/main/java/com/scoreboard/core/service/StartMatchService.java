@@ -31,8 +31,8 @@ public class StartMatchService implements StartMatchUseCase {
         if (homeTeam.equals(awayTeam)) {
             throw new ContestantsDuplicatedException("%s national team is duplicated.".formatted(homeTeam));
         }
-        boolean isHomeTeamAlreadyInGame = findRunningMatchByContestantPort.apply(homeTeam) != null;
-        boolean isAwayTeamAlreadyInGame = findRunningMatchByContestantPort.apply(awayTeam) != null;
+        boolean isHomeTeamAlreadyInGame = findRunningMatchByContestantPort.apply(homeTeam).isPresent();
+        boolean isAwayTeamAlreadyInGame = findRunningMatchByContestantPort.apply(awayTeam).isPresent();
         if (isHomeTeamAlreadyInGame){
             throw new ContestantIsAlreadyInPlayException("%s national team is already involved in running match.".formatted(homeTeam));
         }

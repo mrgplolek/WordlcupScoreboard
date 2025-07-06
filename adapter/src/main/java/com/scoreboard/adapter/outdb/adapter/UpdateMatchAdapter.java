@@ -5,6 +5,8 @@ import com.scoreboard.adapter.outdb.repository.ScoreboardRepository;
 import com.scoreboard.core.domain.FootballMatch;
 import com.scoreboard.core.port.out.UpdateMatchPort;
 
+import java.util.Optional;
+
 public class UpdateMatchAdapter implements UpdateMatchPort {
 
     private static UpdateMatchAdapter instance;
@@ -20,7 +22,7 @@ public class UpdateMatchAdapter implements UpdateMatchPort {
     }
 
     @Override
-    public FootballMatch apply(FootballMatch footballMatch) {
-        return FootballMatchMapper.map(scoreboardRepository.updateScore(footballMatch));
+    public Optional<FootballMatch> apply(FootballMatch footballMatch) {
+        return scoreboardRepository.updateScore(footballMatch).map(FootballMatchMapper::map);
     }
 }

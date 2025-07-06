@@ -5,22 +5,21 @@ import com.scoreboard.adapter.outdb.entity.FootballMatchEntity;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class InMemoryDatabaseMock {
     private List<FootballMatchEntity> databaseMock = new ArrayList<>();
 
-    public FootballMatchEntity findRunningMatchByContestants(String homeTeam, String awayTeam) {
+    public Optional<FootballMatchEntity> findRunningMatchByContestants(String homeTeam, String awayTeam) {
         return databaseMock.stream()
                 .filter(match -> match.getHomeTeam().equals(homeTeam) && match.getAwayTeam().equals(awayTeam) && match.getFinishedAt() == null)
-                .findFirst()
-                .orElse(null);
+                .findFirst();
     }
 
-    public FootballMatchEntity findRunningMatchByContestant(String contestant) {
+    public Optional<FootballMatchEntity> findRunningMatchByContestant(String contestant) {
         return databaseMock.stream()
                 .filter(match -> (match.getHomeTeam().equals(contestant) || match.getAwayTeam().equals(contestant)) && match.getFinishedAt() == null)
-                .findFirst()
-                .orElse(null);
+                .findFirst();
     }
 
     public FootballMatchEntity startNewMatch(String homeTeam, String awayTeam) {
@@ -29,12 +28,11 @@ public class InMemoryDatabaseMock {
         return newMatch;
     }
 
-    public FootballMatchEntity updateScore(String homeTeam, String awayTeam, int homeTeamScore, int awayTeamScore){
+    public Optional<FootballMatchEntity> updateScore(String homeTeam, String awayTeam, int homeTeamScore, int awayTeamScore){
         return databaseMock.stream()
                 .filter(match -> match.getHomeTeam().equals(homeTeam) && match.getAwayTeam().equals(awayTeam))
                 .map(matchEntity -> updateEntityWithNewScore(matchEntity, homeTeamScore, awayTeamScore))
-                .findFirst()
-                .orElse(null);
+                .findFirst();
     }
 
     public Boolean finishMatch(String homeTeam, String awayTeam){

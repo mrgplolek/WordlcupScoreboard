@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.scoreboard.core.port.out.StartMatchPort;
 
 import java.time.Instant;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
@@ -39,8 +40,8 @@ class StartMatchServiceTest {
         String awayTeam = "Brazil";
         when(startMatchPort.apply(homeTeam, awayTeam))
                 .thenReturn(new FootballMatch(homeTeam, awayTeam, 0, 0, Instant.parse("2025-07-01T14:49:15Z"), null));
-        when(findRunningMatchByContestantPort.apply(homeTeam)).thenReturn(null);
-        when(findRunningMatchByContestantPort.apply(awayTeam)).thenReturn(null);
+        when(findRunningMatchByContestantPort.apply(homeTeam)).thenReturn(Optional.empty());
+        when(findRunningMatchByContestantPort.apply(awayTeam)).thenReturn(Optional.empty());
         //when
         FootballMatch result = serviceUnderTest.apply(homeTeam,awayTeam);
         //then
@@ -74,7 +75,7 @@ class StartMatchServiceTest {
         String homeTeam = "Germany";
         String awayTeam = "Brazil";
         when(findRunningMatchByContestantPort.apply(homeTeam))
-                .thenReturn(new FootballMatch("Belgium", homeTeam, 5, 4));
+                .thenReturn(Optional.of(new FootballMatch("Belgium", homeTeam, 5, 4)));
         //when
         Throwable thrownException = catchThrowable(() -> {
             serviceUnderTest.apply(homeTeam,awayTeam);

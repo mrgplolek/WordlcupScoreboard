@@ -10,6 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.when;
@@ -31,9 +33,9 @@ public class FinishMatchServiceTest {
         //given
         String homeTeam = "Argentina";
         String awayTeam = "Mexico";
-        FootballMatch footballMatch = new FootballMatch(homeTeam, awayTeam, 0, 0);
+        Optional<FootballMatch> footballMatch = Optional.of(new FootballMatch(homeTeam, awayTeam, 0, 0));
         when(findRunningMatchByContestantsPort.apply(homeTeam, awayTeam)).thenReturn(footballMatch);
-        when(finishMatchPort.apply(footballMatch)).thenReturn(true);
+        when(finishMatchPort.apply(footballMatch.get())).thenReturn(true);
         //when
         boolean status = serviceUnderTest.apply(homeTeam, awayTeam);
         //then
@@ -45,7 +47,7 @@ public class FinishMatchServiceTest {
         //given
         String homeTeam = "Argentina";
         String awayTeam = "Mexico";
-        when(findRunningMatchByContestantsPort.apply(homeTeam, awayTeam)).thenReturn(null);
+        when(findRunningMatchByContestantsPort.apply(homeTeam, awayTeam)).thenReturn(Optional.empty());
         //when
         Throwable thrownException = catchThrowable(() -> {
             serviceUnderTest.apply(homeTeam,awayTeam);

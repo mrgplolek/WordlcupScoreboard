@@ -7,6 +7,7 @@ import com.scoreboard.core.domain.FootballMatch;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ScoreboardRepository {
 
@@ -25,11 +26,11 @@ public class ScoreboardRepository {
         return instance;
     }
 
-    public FootballMatchEntity findRunningMatchByContestants(String homeTeam, String awayTeam) {
+    public Optional<FootballMatchEntity> findRunningMatchByContestants(String homeTeam, String awayTeam) {
         return databaseMock.findRunningMatchByContestants(homeTeam, awayTeam);
     }
 
-    public FootballMatchEntity findRunningMatchByContestant(String contestant) {
+    public Optional<FootballMatchEntity> findRunningMatchByContestant(String contestant) {
         return databaseMock.findRunningMatchByContestant(contestant);
     }
 
@@ -37,7 +38,7 @@ public class ScoreboardRepository {
         return databaseMock.startNewMatch(homeTeam, awayTeam);
     }
 
-    public FootballMatchEntity updateScore(FootballMatch match){
+    public Optional<FootballMatchEntity> updateScore(FootballMatch match){
         return databaseMock.updateScore(match.getHomeTeam(), match.getAwayTeam(), match.getHomeTeamScore(), match.getAwayTeamScore());
     }
 
