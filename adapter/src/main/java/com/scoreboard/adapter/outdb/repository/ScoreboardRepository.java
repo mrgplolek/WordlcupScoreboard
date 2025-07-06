@@ -29,6 +29,10 @@ public class ScoreboardRepository {
         return databaseMock.findRunningMatchByContestants(homeTeam, awayTeam);
     }
 
+    public FootballMatchEntity findRunningMatchByContestant(String contestant) {
+        return databaseMock.findRunningMatchByContestant(contestant);
+    }
+
     public FootballMatchEntity startNewMatch(String homeTeam, String awayTeam) {
         return databaseMock.startNewMatch(homeTeam, awayTeam);
     }
