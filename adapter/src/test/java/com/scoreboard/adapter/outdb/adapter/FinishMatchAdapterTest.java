@@ -1,30 +1,19 @@
 package com.scoreboard.adapter.outdb.adapter;
 
 import com.scoreboard.adapter.outdb.entity.FootballMatchEntity;
-import com.scoreboard.adapter.outdb.repository.ScoreboardRepository;
 import com.scoreboard.core.domain.FootballMatch;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class FinishMatchAdapterTest {
-
-    static ScoreboardRepository scoreboardRepository;
+public class FinishMatchAdapterTest extends BaseAdapterTest {
 
     private static FinishMatchAdapter adapterUnderTest;
 
     @BeforeAll
     static void setUpDb() {
         adapterUnderTest = FinishMatchAdapter.getInstance();
-        scoreboardRepository = ScoreboardRepository.getInstance();
-        scoreboardRepository.setupTestData();
-    }
-
-    @AfterAll
-    static void cleanUp() {
-        scoreboardRepository.cleanUpDb();
     }
 
     @Test
