@@ -22,6 +22,7 @@ class StartMatchAdapterTest {
     static void setUpDb() {
         adapterUnderTest = new StartMatchAdapter();
         scoreboardRepository = ScoreboardRepository.getInstance();
+        scoreboardRepository.setupTestData();
     }
 
     @AfterAll
