@@ -21,6 +21,7 @@ public class GetMatchesSummaryAdapterTest {
     static void setUpDb() {
         adapterUnderTest = new GetMatchesSummaryAdapter();
         scoreboardRepository = ScoreboardRepository.getInstance();
+        scoreboardRepository.setupTestData();
     }
 
     @AfterAll
