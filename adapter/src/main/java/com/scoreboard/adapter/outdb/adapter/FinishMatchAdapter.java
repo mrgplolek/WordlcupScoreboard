@@ -10,9 +10,8 @@ public class FinishMatchAdapter implements FinishMatchPort {
 
 
     @Override
-    public void apply(FootballMatch footballMatch) {
+    public boolean apply(FootballMatch footballMatch) {
 
-        scoreboardRepository.finishMatch(footballMatch);
-
+        return scoreboardRepository.finishMatch(footballMatch);
     }
 }

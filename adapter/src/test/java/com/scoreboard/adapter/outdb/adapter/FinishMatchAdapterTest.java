@@ -33,10 +33,10 @@ public class FinishMatchAdapterTest {
         String homeTeam = "Germany";
         String awayTeam = "France";
         FootballMatch footballMatch = new FootballMatch(homeTeam, awayTeam, 3, 0);
-
         //when
-        adapterUnderTest.apply(footballMatch);
+        boolean status = adapterUnderTest.apply(footballMatch);
         //then
+        assertThat(status).isTrue();
         FootballMatchEntity result = scoreboardRepository.getSummary().stream()
                 .filter(matchEntity -> matchEntity.getHomeTeam().equals(homeTeam) && matchEntity.getAwayTeam().equals(awayTeam))
                 .findFirst()
@@ -44,6 +44,18 @@ public class FinishMatchAdapterTest {
 
         assertThat(result).isNotNull();
         assertThat(result.getFinishedAt()).isNotNull();
+    }
+
+    @Test
+    void shouldNotFinishNonExistingMatch(){
+        //given
+        String homeTeam = "Mexico";
+        String awayTeam = "Canada";
+        FootballMatch footballMatch = new FootballMatch(homeTeam, awayTeam, 3, 0);
+        //when
+        boolean status = adapterUnderTest.apply(footballMatch);
+        //then
+        assertThat(status).isFalse();
     }
 
 }

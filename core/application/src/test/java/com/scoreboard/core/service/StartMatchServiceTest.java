@@ -24,7 +24,7 @@ class StartMatchServiceTest {
     private StartMatchPort startMatchPort;
 
     @Mock
-    FindRunningMatchByContestantPort findRunningMatchByContestantPort;
+    private FindRunningMatchByContestantPort findRunningMatchByContestantPort;
 
     @InjectMocks
     private StartMatchService serviceUnderTest;
