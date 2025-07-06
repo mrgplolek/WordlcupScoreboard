@@ -16,6 +16,13 @@ public class InMemoryDatabaseMock {
                 .orElse(null);
     }
 
+    public FootballMatchEntity findRunningMatchByContestant(String contestant) {
+        return databaseMock.stream()
+                .filter(match -> (match.getHomeTeam().equals(contestant) || match.getAwayTeam().equals(contestant)) && match.getFinishedAt() == null)
+                .findFirst()
+                .orElse(null);
+    }
+
     public FootballMatchEntity startNewMatch(String homeTeam, String awayTeam) {
         FootballMatchEntity newMatch = FootballMatchEntity.createNewMatchEntity(homeTeam, awayTeam);
         databaseMock.add(newMatch);
