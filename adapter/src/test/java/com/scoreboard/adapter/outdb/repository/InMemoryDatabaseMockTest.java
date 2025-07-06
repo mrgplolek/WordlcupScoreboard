@@ -44,6 +44,16 @@ public class InMemoryDatabaseMockTest {
     }
 
     @Test
+    void shouldFindRunningMatchByContestant() {
+        // given
+        String contestant = "Poland";
+        // when
+        FootballMatchEntity result = databaseMock.findRunningMatchByContestant(contestant);
+        // then
+        assertNewMatchEntity(result, "Germany", contestant);
+    }
+
+    @Test
     void shouldStartNewMatch() {
         // given
         String homeTeam = "Spain";
