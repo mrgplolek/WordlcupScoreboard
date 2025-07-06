@@ -61,7 +61,7 @@ public class ScoreboardController {
     }
 
     private void createSimpleSummaryUI(List<FootballMatch> matches) {
-        if (matches.size() < 1) {
+        if (matches.isEmpty()) {
             System.out.println("There are no running matches at the moment.");
         } else {
             int index = 1;

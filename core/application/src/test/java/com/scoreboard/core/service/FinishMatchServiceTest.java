@@ -49,9 +49,7 @@ public class FinishMatchServiceTest {
         String awayTeam = "Mexico";
         when(findRunningMatchByContestantsPort.apply(homeTeam, awayTeam)).thenReturn(Optional.empty());
         //when
-        Throwable thrownException = catchThrowable(() -> {
-            serviceUnderTest.apply(homeTeam,awayTeam);
-        });
+        Throwable thrownException = catchThrowable(() -> serviceUnderTest.apply(homeTeam,awayTeam));
         //then
         assertThat(thrownException).isInstanceOf(MatchNotFoundException.class)
                 .hasMessage("There is no currently running match between Argentina and Mexico.");

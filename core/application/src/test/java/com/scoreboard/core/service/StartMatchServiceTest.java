@@ -61,9 +61,7 @@ class StartMatchServiceTest {
         String homeTeam = "Poland";
         String awayTeam = "Poland";
         //when
-        Throwable thrownException = catchThrowable(() -> {
-            serviceUnderTest.apply(homeTeam,awayTeam);
-        });
+        Throwable thrownException = catchThrowable(() -> serviceUnderTest.apply(homeTeam,awayTeam));
         //then
         assertThat(thrownException).isInstanceOf(ContestantsDuplicatedException.class)
                 .hasMessage(homeTeam + " national team is duplicated.");
@@ -77,9 +75,7 @@ class StartMatchServiceTest {
         when(findRunningMatchByContestantPort.apply(homeTeam))
                 .thenReturn(Optional.of(new FootballMatch("Belgium", homeTeam, 5, 4)));
         //when
-        Throwable thrownException = catchThrowable(() -> {
-            serviceUnderTest.apply(homeTeam,awayTeam);
-        });
+        Throwable thrownException = catchThrowable(() -> serviceUnderTest.apply(homeTeam,awayTeam));
         //then
         assertThat(thrownException).isInstanceOf(ContestantIsAlreadyInPlayException.class)
                 .hasMessage(homeTeam + " national team is already involved in running match.");

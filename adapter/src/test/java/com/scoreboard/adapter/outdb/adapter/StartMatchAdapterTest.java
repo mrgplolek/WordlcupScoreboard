@@ -1,11 +1,8 @@
 package com.scoreboard.adapter.outdb.adapter;
 
-import com.scoreboard.adapter.outdb.entity.FootballMatchEntity;
 import com.scoreboard.core.domain.FootballMatch;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,8 +21,6 @@ class StartMatchAdapterTest extends BaseAdapterTest {
         //given
         String homeTeam = "Greece";
         String awayTeam = "Brazil";
-        FootballMatchEntity mockedEntity = provideEntityMock(homeTeam, awayTeam);
-
         //when
         FootballMatch footballMatch = adapterUnderTest.apply(homeTeam, awayTeam);
         //then
@@ -38,12 +33,6 @@ class StartMatchAdapterTest extends BaseAdapterTest {
         assertThat(footballMatch.getStartedAt()).isNotNull();
         assertThat(footballMatch.getFinishedAt()).isNull();
 
-    }
-
-    private FootballMatchEntity provideEntityMock(String homeTeam, String awayTeam){
-        FootballMatchEntity entity = FootballMatchEntity.createNewMatchEntity(homeTeam, awayTeam);
-        entity.setStartedAt(Instant.parse("2025-07-01T13:09:15Z"));
-        return entity;
     }
 
 }

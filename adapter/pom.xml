@@ -30,13 +30,6 @@
             <groupId>com.scoreboard.core.domain</groupId>
             <artifactId>domain</artifactId>
             <version>1.0.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.scoreboard.core.domain</groupId>
-            <artifactId>domain</artifactId>
-            <version>1.0.0</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
     <modelVersion>4.0.0</modelVersion>

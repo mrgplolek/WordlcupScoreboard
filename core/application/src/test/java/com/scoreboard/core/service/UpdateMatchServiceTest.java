@@ -50,9 +50,7 @@ public class UpdateMatchServiceTest {
         FootballMatch matchUpdateData = new FootballMatch("Poland", "Germany", 1, 0);
         when(findRunningMatchByContestantsPort.apply("Poland", "Germany")).thenReturn(Optional.empty());
         //when
-        Throwable throwable = catchThrowable(() -> {
-            serviceUnderTest.apply(matchUpdateData);
-        });
+        Throwable throwable = catchThrowable(() -> serviceUnderTest.apply(matchUpdateData));
         //then
         assertThat(throwable).isInstanceOf(MatchNotFoundException.class).hasMessage("There is no currently running match between Poland and Germany.");
     }
@@ -64,9 +62,7 @@ public class UpdateMatchServiceTest {
         Optional<FootballMatch> matchToBeUpdated = Optional.of(new FootballMatch("Poland", "Germany", 0, 0, Instant.parse("2025-07-01T14:49:15Z"), null));
         when(findRunningMatchByContestantsPort.apply("Poland", "Germany")).thenReturn(matchToBeUpdated);
         //when
-        Throwable throwable = catchThrowable(() -> {
-            serviceUnderTest.apply(matchUpdateData);
-        });
+        Throwable throwable = catchThrowable(() -> serviceUnderTest.apply(matchUpdateData));
         //then
         assertThat(throwable).isInstanceOf(IncorrectUpdateMatchDataException.class).hasMessage("Cannot update more than one goal.");
     }
@@ -78,9 +74,7 @@ public class UpdateMatchServiceTest {
         Optional<FootballMatch> matchToBeUpdated = Optional.of(new FootballMatch("Poland", "Germany", 0, 0, Instant.parse("2025-07-01T14:49:15Z"), null));
         when(findRunningMatchByContestantsPort.apply("Poland", "Germany")).thenReturn(matchToBeUpdated);
         //when
-        Throwable throwable = catchThrowable(() -> {
-            serviceUnderTest.apply(matchUpdateData);
-        });
+        Throwable throwable = catchThrowable(() -> serviceUnderTest.apply(matchUpdateData));
         //then
         assertThat(throwable).isInstanceOf(IncorrectUpdateMatchDataException.class).hasMessage("Goal data cannot contain negative numbers.");
     }
