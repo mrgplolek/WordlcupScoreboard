@@ -13,7 +13,7 @@ This application represents a football scoreboard system, which allows users to
 
 During implementation, I made few assumptions:
 - it is possible that the score can be updated into lower value (in case of a mistake or a cancellation of goal by VAR)
-- it is not possible to update score more than 1 goal at one time
+- it is not possible to update score with more than 1 goal at one time
 - finish the match is implemented as soft delete from the in memory db, should not be a problem as currently World Cup has only 64 games
 - get summary shows only ongoing matches
 - matches with reversed home and away teams are consider different matches therefore even if there is ongoing
