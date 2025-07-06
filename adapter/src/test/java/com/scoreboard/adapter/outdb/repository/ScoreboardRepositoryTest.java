@@ -95,15 +95,13 @@ public class ScoreboardRepositoryTest {
         //given
         FootballMatch footballMatch = new FootballMatch("Spain", "Poland", 0, 1);
         //when
-        Boolean result = scoreboardRepository.updateScore(footballMatch);
+        FootballMatchEntity result = scoreboardRepository.updateScore(footballMatch);
         //then
-        assertThat(result).isTrue();
-        FootballMatchEntity updatedMatch = scoreboardRepository.databaseMock.findRunningMatchByContestants("Spain", "Poland");
-        assertThat(updatedMatch).isNotNull();
-        assertThat(updatedMatch.getHomeTeamScore()).isEqualTo(0);
-        assertThat(updatedMatch.getAwayTeamScore()).isEqualTo(1);
-        assertThat(updatedMatch.getHomeTeamLastScore()).isNull();
-        assertThat(updatedMatch.getAwayTeamLastScore()).isNotNull();
+        assertThat(result).isNotNull();
+        assertThat(result.getHomeTeamScore()).isEqualTo(0);
+        assertThat(result.getAwayTeamScore()).isEqualTo(1);
+        assertThat(result.getHomeTeamLastScore()).isNull();
+        assertThat(result.getAwayTeamLastScore()).isNotNull();
     }
 
     @Test

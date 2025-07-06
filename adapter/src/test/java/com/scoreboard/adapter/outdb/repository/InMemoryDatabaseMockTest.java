@@ -71,13 +71,14 @@ public class InMemoryDatabaseMockTest {
         String homeTeam = "Germany";
         String awayTeam = "Poland";
         // when
-        Boolean result = databaseMock.updateScore(homeTeam, awayTeam, 1, 0);
+        FootballMatchEntity result = databaseMock.updateScore(homeTeam, awayTeam, 1, 0);
         // then
-        assertThat(result).isTrue();
-        assertThat(databaseMock.getSummary().getFirst().getHomeTeamScore()).isEqualTo(1);
-        assertThat(databaseMock.getSummary().getFirst().getAwayTeamScore()).isEqualTo(0);
-        assertThat(databaseMock.getSummary().getFirst().getHomeTeamLastScore()).isNotNull();
-        assertThat(databaseMock.getSummary().getFirst().getAwayTeamLastScore()).isNull();
+        assertThat(result).isNotNull();
+        assertThat(result).isEqualTo(databaseMock.getSummary().getFirst());
+        assertThat(result.getHomeTeamScore()).isEqualTo(1);
+        assertThat(result.getAwayTeamScore()).isEqualTo(0);
+        assertThat(result.getHomeTeamLastScore()).isNotNull();
+        assertThat(result.getAwayTeamLastScore()).isNull();
     }
 
     @Test
@@ -86,9 +87,9 @@ public class InMemoryDatabaseMockTest {
         String homeTeam = "Croatia";
         String awayTeam = "Argentina";
         // when
-        Boolean result = databaseMock.updateScore(homeTeam, awayTeam, 1, 0);
+        FootballMatchEntity result = databaseMock.updateScore(homeTeam, awayTeam, 1, 0);
         // then
-        assertThat(result).isFalse();
+        assertThat(result).isNull();
     }
 
     @Test

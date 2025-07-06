@@ -29,12 +29,12 @@ public class InMemoryDatabaseMock {
         return newMatch;
     }
 
-    public Boolean updateScore(String homeTeam, String awayTeam, int homeTeamScore, int awayTeamScore){
+    public FootballMatchEntity updateScore(String homeTeam, String awayTeam, int homeTeamScore, int awayTeamScore){
         return databaseMock.stream()
                 .filter(match -> match.getHomeTeam().equals(homeTeam) && match.getAwayTeam().equals(awayTeam))
                 .map(matchEntity -> updateEntityWithNewScore(matchEntity, homeTeamScore, awayTeamScore))
                 .findFirst()
-                .isPresent();
+                .orElse(null);
     }
 
     public Boolean finishMatch(String homeTeam, String awayTeam){

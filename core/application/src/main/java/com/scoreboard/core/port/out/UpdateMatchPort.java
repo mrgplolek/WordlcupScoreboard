@@ -5,6 +5,6 @@ import com.scoreboard.core.domain.FootballMatch;
 @FunctionalInterface
 public interface UpdateMatchPort {
 
-    void apply(FootballMatch footballMatch);
+    FootballMatch apply(FootballMatch footballMatch);
 
 }

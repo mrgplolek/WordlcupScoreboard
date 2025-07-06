@@ -37,7 +37,7 @@ public class ScoreboardRepository {
         return databaseMock.startNewMatch(homeTeam, awayTeam);
     }
 
-    public Boolean updateScore(FootballMatch match){
+    public FootballMatchEntity updateScore(FootballMatch match){
         return databaseMock.updateScore(match.getHomeTeam(), match.getAwayTeam(), match.getHomeTeamScore(), match.getAwayTeamScore());
     }
 
