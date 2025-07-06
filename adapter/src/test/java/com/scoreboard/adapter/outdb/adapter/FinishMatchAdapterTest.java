@@ -17,7 +17,7 @@ public class FinishMatchAdapterTest {
 
     @BeforeAll
     static void setUpDb() {
-        adapterUnderTest = new FinishMatchAdapter();
+        adapterUnderTest = FinishMatchAdapter.getInstance();
         scoreboardRepository = ScoreboardRepository.getInstance();
         scoreboardRepository.setupTestData();
     }

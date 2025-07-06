@@ -7,12 +7,21 @@ import com.scoreboard.core.port.out.StartMatchPort;
 
 public class StartMatchService implements StartMatchUseCase {
 
+    private static StartMatchService instance;
+
     private final StartMatchPort startMatchPort;
     private final FindRunningMatchByContestantPort findRunningMatchByContestantPort;
 
-    public StartMatchService(StartMatchPort startMatchPort, FindRunningMatchByContestantPort findRunningMatchByContestantPort) {
+    private StartMatchService(StartMatchPort startMatchPort, FindRunningMatchByContestantPort findRunningMatchByContestantPort) {
         this.startMatchPort = startMatchPort;
         this.findRunningMatchByContestantPort = findRunningMatchByContestantPort;
+    }
+
+    public static StartMatchService getInstance(StartMatchPort startMatchPort, FindRunningMatchByContestantPort findRunningMatchByContestantPort) {
+        if (instance == null) {
+            instance = new StartMatchService(startMatchPort, findRunningMatchByContestantPort);
+        }
+        return instance;
     }
 
     @Override

@@ -8,12 +8,21 @@ import com.scoreboard.core.port.out.FinishMatchPort;
 
 public class FinishMatchService implements FinishMatchUseCase {
 
+    private static FinishMatchService instance;
+
     private final FinishMatchPort finishMatchPort;
     private final FindRunningMatchByContestantsPort findRunningMatchByContestantsPort;
 
-    public FinishMatchService(FinishMatchPort finishMatchPort, FindRunningMatchByContestantsPort findRunningMatchByContestantsPort) {
+    private FinishMatchService(FinishMatchPort finishMatchPort, FindRunningMatchByContestantsPort findRunningMatchByContestantsPort) {
         this.finishMatchPort = finishMatchPort;
         this.findRunningMatchByContestantsPort = findRunningMatchByContestantsPort;
+    }
+
+    public static FinishMatchService getInstance(FinishMatchPort finishMatchPort, FindRunningMatchByContestantsPort findRunningMatchByContestantsPort) {
+        if (instance == null) {
+            instance = new FinishMatchService(finishMatchPort, findRunningMatchByContestantsPort);
+        }
+        return instance;
     }
 
     @Override

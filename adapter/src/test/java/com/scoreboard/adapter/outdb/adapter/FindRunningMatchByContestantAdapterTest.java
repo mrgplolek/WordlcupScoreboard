@@ -16,7 +16,7 @@ public class FindRunningMatchByContestantAdapterTest {
 
     @BeforeAll
     static void setUpDb() {
-        adapterUnderTest = new FindRunningMatchByContestantAdapter();
+        adapterUnderTest = FindRunningMatchByContestantAdapter.getInstance();
         scoreboardRepository = ScoreboardRepository.getInstance();
         scoreboardRepository.setupTestData();
     }

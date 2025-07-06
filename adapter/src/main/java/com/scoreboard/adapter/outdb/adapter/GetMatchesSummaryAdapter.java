@@ -9,7 +9,17 @@ import java.util.List;
 
 public class GetMatchesSummaryAdapter implements GetMatchesSummaryPort {
 
+    private static GetMatchesSummaryAdapter instance;
     private final ScoreboardRepository scoreboardRepository = ScoreboardRepository.getInstance();
+
+    private GetMatchesSummaryAdapter() {}
+
+    public static GetMatchesSummaryAdapter getInstance() {
+        if (instance == null) {
+            instance = new GetMatchesSummaryAdapter();
+        }
+        return instance;
+    }
 
     @Override
     public List<FootballMatch> apply() {

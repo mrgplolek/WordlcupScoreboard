@@ -9,9 +9,24 @@ import com.scoreboard.core.port.out.UpdateMatchPort;
 
 public class UpdateMatchService implements UpdateMatchUseCase {
 
-    private FindRunningMatchByContestantsPort findRunningMatchByContestantsPort;
-    private UpdateMatchPort updateMatchPort;
+    private static UpdateMatchService instance;
 
+    private final FindRunningMatchByContestantsPort findRunningMatchByContestantsPort;
+    private final UpdateMatchPort updateMatchPort;
+
+    private UpdateMatchService(FindRunningMatchByContestantsPort findRunningMatchByContestantsPort,
+                               UpdateMatchPort updateMatchPort) {
+        this.findRunningMatchByContestantsPort = findRunningMatchByContestantsPort;
+        this.updateMatchPort = updateMatchPort;
+    }
+
+    public static UpdateMatchService getInstance(FindRunningMatchByContestantsPort findRunningMatchByContestantsPort,
+                                                 UpdateMatchPort updateMatchPort) {
+        if (instance == null) {
+            instance = new UpdateMatchService(findRunningMatchByContestantsPort, updateMatchPort);
+        }
+        return instance;
+    }
     @Override
     public FootballMatch apply(FootballMatch match) {
         FootballMatch matchToBeUpdated = findRunningMatchByContestantsPort.apply(match.getHomeTeam(), match.getAwayTeam());

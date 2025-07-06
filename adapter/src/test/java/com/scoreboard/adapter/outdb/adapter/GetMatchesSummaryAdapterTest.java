@@ -19,7 +19,7 @@ public class GetMatchesSummaryAdapterTest {
 
     @BeforeAll
     static void setUpDb() {
-        adapterUnderTest = new GetMatchesSummaryAdapter();
+        adapterUnderTest = GetMatchesSummaryAdapter.getInstance();
         scoreboardRepository = ScoreboardRepository.getInstance();
         scoreboardRepository.setupTestData();
     }

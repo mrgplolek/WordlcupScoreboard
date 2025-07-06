@@ -9,10 +9,19 @@ import java.util.List;
 
 public class GetMatchesSummaryService implements GetMatchesSummaryUseCase {
 
+    private static GetMatchesSummaryService instance;
+
     private final GetMatchesSummaryPort getMatchesSummaryPort;
 
-    public GetMatchesSummaryService(GetMatchesSummaryPort getMatchesSummaryPort) {
+    private GetMatchesSummaryService(GetMatchesSummaryPort getMatchesSummaryPort) {
         this.getMatchesSummaryPort = getMatchesSummaryPort;
+    }
+
+    public static GetMatchesSummaryService getInstance(GetMatchesSummaryPort getMatchesSummaryPort) {
+        if (instance == null) {
+            instance = new GetMatchesSummaryService(getMatchesSummaryPort);
+        }
+        return instance;
     }
 
     @Override

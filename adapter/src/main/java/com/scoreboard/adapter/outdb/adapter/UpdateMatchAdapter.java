@@ -7,7 +7,17 @@ import com.scoreboard.core.port.out.UpdateMatchPort;
 
 public class UpdateMatchAdapter implements UpdateMatchPort {
 
+    private static UpdateMatchAdapter instance;
     private final ScoreboardRepository scoreboardRepository = ScoreboardRepository.getInstance();
+
+    private UpdateMatchAdapter() {}
+
+    public static UpdateMatchAdapter getInstance() {
+        if (instance == null) {
+            instance = new UpdateMatchAdapter();
+        }
+        return instance;
+    }
 
     @Override
     public FootballMatch apply(FootballMatch footballMatch) {

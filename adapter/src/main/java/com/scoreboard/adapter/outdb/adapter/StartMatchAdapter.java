@@ -8,8 +8,17 @@ import com.scoreboard.core.port.out.StartMatchPort;
 
 public class StartMatchAdapter implements StartMatchPort {
 
+    private static StartMatchAdapter instance;
     private final ScoreboardRepository scoreboardRepository = ScoreboardRepository.getInstance();
 
+    private StartMatchAdapter() {}
+
+    public static StartMatchAdapter getInstance() {
+        if (instance == null) {
+            instance = new StartMatchAdapter();
+        }
+        return instance;
+    }
 
     @Override
     public  FootballMatch apply(String homeTeam, String awayTeam) {

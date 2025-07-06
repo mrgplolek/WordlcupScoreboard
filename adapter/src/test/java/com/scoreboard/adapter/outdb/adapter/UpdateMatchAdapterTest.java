@@ -17,7 +17,7 @@ public class UpdateMatchAdapterTest {
 
     @BeforeAll
     static void setUpDb() {
-        adapterUnderTest = new UpdateMatchAdapter();
+        adapterUnderTest = UpdateMatchAdapter.getInstance();
         scoreboardRepository = ScoreboardRepository.getInstance();
         scoreboardRepository.setupTestData();
     }
