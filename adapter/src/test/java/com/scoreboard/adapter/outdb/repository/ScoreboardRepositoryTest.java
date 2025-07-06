@@ -51,6 +51,29 @@ public class ScoreboardRepositoryTest {
     }
 
     @Test
+    void shouldReturnRunningMatchByContestant() {
+        //given
+        String contestant = "Spain";
+        //when
+        FootballMatchEntity matchEntity = scoreboardRepository.findRunningMatchByContestant(contestant);
+        //then
+        assertThat(matchEntity).isNotNull();
+        assertThat(matchEntity.getHomeTeam()).contains("Spain");
+        assertThat(matchEntity.getAwayTeam()).contains("Poland");
+        assertThat(matchEntity.getFinishedAt()).isNull();
+    }
+
+    @Test
+    void shouldReturnNullWhenGivenFinishedMatchContestant() {
+        //given
+        String contestant = "Sweden";
+        //when
+        FootballMatchEntity matchEntity = scoreboardRepository.findRunningMatchByContestant(contestant);
+        //then
+        assertThat(matchEntity).isNull();
+    }
+
+    @Test
     void shouldStartNewMatch() {
         //given
         String homeTeam = "Ukraine";
