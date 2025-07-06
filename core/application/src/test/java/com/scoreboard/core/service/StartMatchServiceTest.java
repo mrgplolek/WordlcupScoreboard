@@ -34,7 +34,8 @@ class StartMatchServiceTest {
         //given
         String homeTeam = "Germany";
         String awayTeam = "Brazil";
-        when(startMatchPort.apply(homeTeam, awayTeam)).thenReturn(new FootballMatch(homeTeam, awayTeam, 0, 0));
+        when(startMatchPort.apply(homeTeam, awayTeam))
+                .thenReturn(new FootballMatch(homeTeam, awayTeam, 0, 0));
         when(findRunningMatchByContestantPort.apply(homeTeam)).thenReturn(null);
         //when
         serviceUnderTest.apply(homeTeam,awayTeam);
@@ -47,12 +48,14 @@ class StartMatchServiceTest {
         //given
         String homeTeam = "Germany";
         String awayTeam = "Brazil";
-        when(findRunningMatchByContestantPort.apply(homeTeam)).thenReturn(new FootballMatch("Belgium", homeTeam, 5, 4));
+        when(findRunningMatchByContestantPort.apply(homeTeam))
+                .thenReturn(new FootballMatch("Belgium", homeTeam, 5, 4));
         //when
         Throwable thrownException = catchThrowable(() -> {
             serviceUnderTest.apply(homeTeam,awayTeam);
         });
         //then
-        assertThat(thrownException).isInstanceOf(ContestantIsAlreadyInPlayException.class).hasMessage(homeTeam + " national team is already involved in running match.");
+        assertThat(thrownException).isInstanceOf(ContestantIsAlreadyInPlayException.class)
+                .hasMessage(homeTeam + " national team is already involved in running match.");
     }
 }
