@@ -33,7 +33,7 @@ public class GetMatchesSummaryAdapterTest {
     void shouldGetAllMatchesAsASummary() {
         //given
         //when
-        List<FootballMatch> result = adapterUnderTest.getMatchesSummary();
+        List<FootballMatch> result = adapterUnderTest.apply();
         //then
         assertThat(result).isNotNull().isNotEmpty();
         assertThat(result.size()).isEqualTo(4);

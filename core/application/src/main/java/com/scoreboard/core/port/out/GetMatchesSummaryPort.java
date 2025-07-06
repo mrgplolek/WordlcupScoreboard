@@ -7,5 +7,5 @@ import java.util.List;
 @FunctionalInterface
 public interface GetMatchesSummaryPort {
 
-    List<FootballMatch> getMatchesSummary();
+    List<FootballMatch> apply();
 }

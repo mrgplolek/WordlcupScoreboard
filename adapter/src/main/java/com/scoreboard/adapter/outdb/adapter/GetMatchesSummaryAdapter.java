@@ -12,7 +12,7 @@ public class GetMatchesSummaryAdapter implements GetMatchesSummaryPort {
     private final ScoreboardRepository scoreboardRepository = ScoreboardRepository.getInstance();
 
     @Override
-    public List<FootballMatch> getMatchesSummary() {
+    public List<FootballMatch> apply() {
         return scoreboardRepository.getSummary().stream().map(FootballMatchMapper::map).toList();
     }
 }
