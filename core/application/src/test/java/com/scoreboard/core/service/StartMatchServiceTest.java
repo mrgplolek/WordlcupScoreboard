@@ -35,6 +35,7 @@ class StartMatchServiceTest {
         String homeTeam = "Germany";
         String awayTeam = "Brazil";
         when(startMatchPort.apply(homeTeam, awayTeam)).thenReturn(new FootballMatch(homeTeam, awayTeam, 0, 0));
+        when(findRunningMatchByContestantPort.apply(homeTeam)).thenReturn(null);
         //when
         serviceUnderTest.apply(homeTeam,awayTeam);
         //then
