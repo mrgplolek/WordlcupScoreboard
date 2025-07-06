@@ -59,7 +59,6 @@ class StartMatchServiceTest {
         //given
         String homeTeam = "Poland";
         String awayTeam = "Poland";
-        when(findRunningMatchByContestantPort.apply(homeTeam)).thenReturn(null);
         //when
         Throwable thrownException = catchThrowable(() -> {
             serviceUnderTest.apply(homeTeam,awayTeam);

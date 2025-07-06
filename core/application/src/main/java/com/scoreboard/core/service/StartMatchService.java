@@ -2,6 +2,7 @@ package com.scoreboard.core.service;
 
 import com.scoreboard.core.domain.FootballMatch;
 import com.scoreboard.core.domain.exception.ContestantIsAlreadyInPlayException;
+import com.scoreboard.core.domain.exception.ContestantsDuplicatedException;
 import com.scoreboard.core.port.in.StartMatchUseCase;
 import com.scoreboard.core.port.out.FindRunningMatchByContestantPort;
 import com.scoreboard.core.port.out.StartMatchPort;
@@ -27,6 +28,9 @@ public class StartMatchService implements StartMatchUseCase {
 
     @Override
     public FootballMatch apply(String homeTeam, String awayTeam) {
+        if (homeTeam.equals(awayTeam)) {
+            throw new ContestantsDuplicatedException("%s national team is duplicated.".formatted(homeTeam));
+        }
         boolean isHomeTeamAlreadyInGame = findRunningMatchByContestantPort.apply(homeTeam) != null;
         boolean isAwayTeamAlreadyInGame = findRunningMatchByContestantPort.apply(awayTeam) != null;
         if (isHomeTeamAlreadyInGame){
