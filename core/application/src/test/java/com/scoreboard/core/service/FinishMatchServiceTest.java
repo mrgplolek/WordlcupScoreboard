@@ -1,18 +1,20 @@
 package com.scoreboard.core.service;
 
 import com.scoreboard.core.domain.FootballMatch;
-import com.scoreboard.core.domain.exception.ContestantIsAlreadyInPlayException;
 import com.scoreboard.core.domain.exception.MatchNotFoundException;
 import com.scoreboard.core.port.out.FindRunningMatchByContestantsPort;
 import com.scoreboard.core.port.out.FinishMatchPort;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 public class FinishMatchServiceTest {
 
     @Mock
@@ -50,6 +52,6 @@ public class FinishMatchServiceTest {
         });
         //then
         assertThat(thrownException).isInstanceOf(MatchNotFoundException.class)
-                .hasMessage("There is no running match between provided contestants.");
+                .hasMessage("There is no currently running match between Argentina and Mexico.");
     }
 }
